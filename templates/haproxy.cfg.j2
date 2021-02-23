@@ -66,7 +66,7 @@ listen stats
     stats uri /
     monitor-uri /healthz
 
-
+{% if not ipi %}
 frontend openshift-api-server
     bind *:6443
     default_backend openshift-api-server
@@ -127,6 +127,7 @@ backend ingress-https
 {% for m in masters %}
     server {{ m.name | lower }}-https-router{{ loop.index0 }} {{ m.ipaddr }}:443 check
 {% endfor %}
+{% endif %}
 {% endif %}
 
 #---------------------------------------------------------------------
